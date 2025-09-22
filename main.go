@@ -1,26 +1,30 @@
 package main
 
-import(
-	"mini_go_compiler/lexical"
+import (
+	"fmt"
+	"go-course/projects"
 )
+
+
 func main() {
+var switchChoice int
 
-	input := `int x = 10;
-int w = 1;
-float y = 3.14;
-z == x;
-x = x++;
-/* comentário de múltiplas linhas
-	aslkd;laskd;laskd;askd;alskd;
-	sadjlkjdlaskjdlaskjdlaskjdlaskjd
-*/
-if (x >= y) {
-    print(x);
-}`
+	fmt.Println("---Golang Projects---")
+	fmt.Println("1-> Notepad")
+	fmt.Println("2-> End operation")
+	fmt.Printf("Choose an operaration:")
+	fmt.Scan(&switchChoice)
+	fmt.Printf("Your choice: %d\n", switchChoice)
 
-	scanner := lexical.NewScanner(input)
-	tokens := scanner.ScanAll()
-
-	lexical.PrintTokensGrouped(tokens)
+	switch switchChoice {
+	case 1:
+		projects.Notepad()
+	case 2:
+		fmt.Println("Exited loop")
+	case 3:
+		testBufio()
+	default:
+		fmt.Println("Exited program")
+	}
 }
 

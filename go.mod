@@ -1,3 +1,3 @@
-module mini_go_compiler
+module go-course
 
-go 1.25.1
+go 1.25.0
