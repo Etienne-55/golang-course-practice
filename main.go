@@ -7,24 +7,28 @@ import (
 
 
 func main() {
+
+for{
 var switchChoice int
+		fmt.Println("---Golang Projects---")
+		fmt.Println("1-> Notepad")
+		fmt.Println("2-> End operation")
+		fmt.Printf("Choose an operaration:")
+		fmt.Scan(&switchChoice)
+		fmt.Printf("Your choice: %d\n", switchChoice)
 
-	fmt.Println("---Golang Projects---")
-	fmt.Println("1-> Notepad")
-	fmt.Println("2-> End operation")
-	fmt.Printf("Choose an operaration:")
-	fmt.Scan(&switchChoice)
-	fmt.Printf("Your choice: %d\n", switchChoice)
+		switch switchChoice {
+		case 1:
+			projects.Notepad()
+			continue
 
-	switch switchChoice {
-	case 1:
-		projects.Notepad()
-	case 2:
-		fmt.Println("Exited loop")
-	case 3:
-		testBufio()
-	default:
-		fmt.Println("Exited program")
+		case 2:
+			fmt.Println("Exited loop")
+			return
+
+		default:
+			fmt.Println("Exited program")
+		}
 	}
 }
 

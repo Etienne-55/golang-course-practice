@@ -14,8 +14,8 @@ for {
 		fmt.Println("----Notepad----")
 		fmt.Println("1-> Enter a new note")
 		fmt.Println("2-> Search a note ")
-		fmt.Println("3-> Edit a note")
-		fmt.Println("6-> Exit")
+		fmt.Println("3-> Delete a note")
+		fmt.Println("4-> Exit")
 		fmt.Printf("Enter your choice: ")
 		fmt.Scan(&switchChoice)
 		fmt.Printf("Your choice %d\n", switchChoice)
@@ -24,11 +24,17 @@ for {
 
 		case 1:
 			writeFile()
+			continue
 
 		case 2:
 			readFile()
+			continue
 
-		case 6:
+		case 3:
+			deleteFile()
+			continue
+
+		case 4:
 			fmt.Println("Loop ended")
 			return
 
@@ -40,20 +46,6 @@ for {
 
 
 func writeFile() error {
-	// var fileName string
-	// var note string
-	// fmt.Println("Enter the note name: ")
-	// fmt.Scan(&fileName)
-	//
-	// formatedFileName := fmt.Sprintf("\"%s.txt\"", fileName)
-	//
-	// fmt.Printf("Enter the note: ")
-	// scanner := bufio.NewScanner(os.Stdin)	
-	// if scanner.Scan() {
-	// 	note = scanner.Text()
-	// 	os.WriteFile(formatedFileName, []byte(note), 0644)
-	// }
-
 	
 	fmt.Print("Enter the note name: ")
 	var fileName string
@@ -76,23 +68,6 @@ func writeFile() error {
 	fmt.Printf("Note saved to %s\n", formattedFileName)
 	return nil
 }
-
-
-// func readFile() {
-// var fileName string
-//
-// 	fmt.Printf("Enter the name of the note you want to read: ")
-// 	fmt.Scan(&fileName)
-// 	formatedFileName := fmt.Sprintf("\"%s.txt\"", fileName)
-//
-// 	noteData, err := os.ReadFile(formatedFileName)
-// 	if err != nil {
-// 		fmt.Println("Error while reading the file, file not found.")
-// 	}
-//
-// 	fileContent := string(noteData)
-// 	fmt.Println(fileContent)
-// }
 
 
 func readFile() error {
