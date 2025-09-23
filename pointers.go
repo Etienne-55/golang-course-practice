@@ -4,11 +4,11 @@ import "fmt"
 
 func PointersLesson() {
 	age := 32
-	// var agePointer *int
-	//
-	// agePointer = &age
+	var agePointer *int
 
-	fmt.Println(age)
+	agePointer = &age
+
+	fmt.Println(agePointer)
 
 	adultYears := getAdultYears(age)
 	fmt.Println(adultYears)
