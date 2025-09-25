@@ -15,9 +15,9 @@ var switchChoice int
 		fmt.Println("---Golang Projects---")
 		fmt.Println("1-> Register acount")
 		fmt.Println("2-> Notepad")
-		fmt.Println("3-> Data structure mini projects")
+		fmt.Println("3-> Register a pet")
 		fmt.Println("3-> End operation")
-		fmt.Printf("Choose an operaration:")
+		fmt.Printf("Choose an operaration: ")
 		fmt.Scan(&switchChoice)
 		fmt.Printf("Your choice: %d\n", switchChoice)
 
@@ -31,7 +31,7 @@ var switchChoice int
 			continue
 
 		case 3:
-			datastructure.PetshopMenu()
+			datastructure.RegisterPet()
 			continue
 
 		case 4:
@@ -39,7 +39,7 @@ var switchChoice int
 			return
 			
 		default:
-			fmt.Println("Exited program")
+			fmt.Println("error. wrong input ")
 		}
 	}
 }

@@ -1,22 +1,23 @@
 package datastructure
 
 import (
-	"errors"
+	"os"
 	"fmt"
+	"bufio"
+	"errors"
 )
 
-
-var catList []cat
-
-func registerCat() error {
+func registerCat() (Pet, error) {
+	
+	animalCategory := "cat"
 
 	fmt.Println("Cat registration")
 	fmt.Printf("Enter the cat name: ")
-	var catName string
-	if _, err := fmt.Scanln(&catName);
-	err != nil {
-		return fmt.Errorf("failed to read name")
+	scanner := bufio.NewScanner(os.Stdin)
+	if !scanner.Scan() {
+		return nil, fmt.Errorf("failed to read name")
 	}
+	catName := scanner.Text()
 
 	fmt.Printf("Enter the cat breed: ")
 	var catBreed string
@@ -26,29 +27,24 @@ func registerCat() error {
 	var catAge int
 	if _, err := fmt.Scanln(&catAge);
 	err != nil {
-		return fmt.Errorf("failed to read cat age")
+		return nil, fmt.Errorf("failed to read cat age")
 	}
 
-	newCatData, err := newPet(catName, catBreed, catAge)	
-	if err != nil {
-		return fmt.Errorf("could not save data %w", err)
-	}
-
-	catList = append(catList, *newCatData)
-
-	fmt.Println(catList)
-	fmt.Println(catList[:1])
-
-	return nil
+	return newCat(animalCategory, catName, catBreed, catAge)
 }
-
 type cat struct {
+	animalType string
 	name string
 	breed string
 	age int
 }
 
-func newPet(name, breed string, age int) (*cat, error){
+func (c *cat) AnimalType() string { return c.animalType }
+func (c *cat) Name() string { return c.name }
+func (c *cat) Breed() string { return c.breed}
+func (c *cat) Age() int { return c.age}
+
+func newCat(animalType, name, breed string, age int) (*cat, error){
 	if breed == "" {
 		 breed = "stray"
 	}
@@ -62,6 +58,7 @@ func newPet(name, breed string, age int) (*cat, error){
 	}
 
 	return &cat{
+		animalType: animalType,
 		name: name,
 		breed: breed,
 		age: age,
