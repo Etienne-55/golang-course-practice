@@ -44,3 +44,41 @@ var switchChoice int
 	}
 }
 
+
+// type tranformFn func(int) int
+//
+// func numbers() {
+// 	numbers := []int{1, 3, 45}
+// 	doubled := transformNumbers(&numbers, double)
+// 	tripled := transformNumbers(&numbers, triple)
+//
+// 	fmt.Println(doubled)
+// 	fmt.Println(tripled)
+// }
+//
+//
+// func transformNumbers(numbers *[]int, transform tranformFn)  []int {
+// 	dNumbers := []int{}
+//
+// 	for _, val := range *numbers {
+// 		dNumbers = append(dNumbers, transform(val))
+//
+// 	}
+// 	return dNumbers
+// }
+//
+// // func getTransformetFunction(numbers *[]int) tranformFn {
+// // 	if (*numbers)[0] == 1 {
+// // 	return double
+// // 	} else {
+// // 	return  triple
+// // }
+//
+// func double(number int) int {
+// 	return number * 2
+// }
+//
+// func triple(number int) int {
+// 	return number * 3
+// }
+

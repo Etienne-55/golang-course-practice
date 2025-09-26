@@ -53,7 +53,6 @@ type Pet interface {
 	Age() int
 }
 
-
 func register(readFunc func() (Pet, error)) error {
 	pet, err := readFunc()
 	if err != nil {
@@ -64,7 +63,6 @@ func register(readFunc func() (Pet, error)) error {
 	for i, p := range PetList {
 		fmt.Printf("%d. ->%s %s (%s), Age: %d\n", i+1, p.AnimalType(), p.Name(), p.Breed(), p.Age())
 	}
-
 	return nil
 }
 

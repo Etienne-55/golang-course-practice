@@ -8,7 +8,6 @@ import (
 )
 
 
-
 func registerDog()  (Pet, error) {
 	animalCategory := "dog"
 
