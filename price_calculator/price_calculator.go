@@ -3,96 +3,70 @@ package pricecalculator
 import (
 	"os"
 	"fmt"
-	"bufio"
 	"errors"
+	"encoding/json"
 )
 
 
-func calculeAndWrite() {
-	
-	fmt.Println("")	
+func PriceCalculatorMain() {
+	productInfo, _ := calculatePrice()
+	savePriceToFile(productInfo)
+} 
 
-
-}
-
-type product struct {
-	originalPrice int
-	taxesApplied int
-	newPrice int
-}
-
-
-func newProduct(originalPrice, taxesApplied, newPrice int) (*product, error){
-	if originalPrice <= 0 {
-		return nil, errors.New("price cant be less or equal to 0")
-	}	
-
-	return &product{
-		originalPrice: originalPrice,
-		taxesApplied: taxesApplied,
-		newPrice: newPrice,
-	}, nil
-}
-
-func (c *product) OriginalPrice() int { return c.originalPrice }
-func (c *product) TaxesApplied() int { return c.taxesApplied }
-func (c *product) NewPrice() int { return c.newPrice }
-
-
-func calculatePrice() (Product, error)  {
-	fmt.Printf("Enter  the value of the product: ")
-	var productPrice int
+func calculatePrice() (*product, error)  {
+	fmt.Printf("Enter the value of the product: ")
+	var productPrice float64
 	if _, err := fmt.Scan(&productPrice);
 	err != nil {
 		return nil, fmt.Errorf("error getting price input")
 	}
 
-	fmt.Printf("Enter  the value of the product: ")
-	var taxValue int
+	fmt.Printf("Enter the value of the tax: ")
+	var taxValue float64
 	if _, err := fmt.Scan(&taxValue);
 	err != nil {
 		return nil, fmt.Errorf("error getting price input")
 	}
 
-	var finalValue int
-	finalValue = productPrice * taxValue
+	realTaxValue := taxValue / 100
+	fmt.Println(realTaxValue)
 
+	finalValue := productPrice * (1 + realTaxValue)
+	fmt.Printf("The final price is %2.f\n", finalValue)
 
 	return newProduct(productPrice, taxValue, finalValue)
-
 }
 
-
-// func savePriceToFile() error {
-// 	fmt.Pr
-//
-//
-//
-//
-//
-// }
-
-func writeFile() error {
-	
-	fmt.Print("Enter the note name: ")
-	var fileName string
-	if _, err := fmt.Scanln(&fileName); err != nil {
-		return fmt.Errorf("failed to read filename: %w", err)
+func savePriceToFile(product *product) error {
+	jsonData, err := json.Marshal(product)
+	if err != nil {
+		return fmt.Errorf("failed to tranform data to json")
 	}
 
-	fmt.Print("Enter the note: ")
-	scanner := bufio.NewScanner(os.Stdin)
-	if !scanner.Scan() {
-		return fmt.Errorf("failed to read note content")
-	}
-
-	formattedFileName := fileName + ".txt"
-	if err := os.WriteFile(formattedFileName, []byte(scanner.Text()), 0644);
+	if err := os.WriteFile("price_after_taxes.json", []byte(jsonData), 0644);
 	err != nil {
-		return  fmt.Errorf("Failed to write file: %w", err)
+		return fmt.Errorf("failed to write file: %w", err)
 	}
 
-	fmt.Printf("Note saved to %s\n", formattedFileName)
+	fmt.Println("price saved to files")
 	return nil
+}
+
+type product struct {
+	OriginalPrice float64
+	TaxesApplied float64
+	NewPrice float64 
+}
+
+func newProduct(originalPrice, taxesApplied, newPrice float64) (*product, error){
+	if originalPrice <= 0 {
+		return nil, errors.New("price cant be less or equal to 0")
+	}	
+
+	return &product{
+		OriginalPrice: originalPrice,
+		TaxesApplied: taxesApplied,
+		NewPrice: newPrice,
+	}, nil
 }
 
