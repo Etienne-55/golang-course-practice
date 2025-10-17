@@ -14,7 +14,7 @@ type User struct {
 }
 
 
-func (u User) Save() error {
+func (u *User) Save() error {
 	query := "INSERT INTO users(email, password) VALUES (?, ?)"
 	stmt, err := db.DB.Prepare(query)
 	if err != nil {
@@ -37,25 +37,22 @@ func (u User) Save() error {
 
 	u.ID = userID
 	return err
-
 }
 
-
 func (u User) ValidateCredentials() error {
-	query := "SELECT password FROM users WHERE email = ?"
+	query := "SELECT id, password FROM users WHERE email = ?"
 	row := db.DB.QueryRow(query, u.Email)
 
-
 	var retreivedPassword string
-	err := row.Scan(&retreivedPassword)
+	err := row.Scan(&u.ID, &retreivedPassword)
 	if err != nil {
-		return errors.New("credentials invalid")
+		return errors.New("error when retrieving user data")
 	}
  
 	passwordIsValid := utils.CheckPasswordHash(u.Password, retreivedPassword)
 	
 	if !passwordIsValid {
-		return errors.New("credentials invalid")
+		return errors.New("passwords dont match")
 	}
 
 	return nil
