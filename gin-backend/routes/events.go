@@ -45,7 +45,7 @@ func CreateEvent(context *gin.Context) {
 
 	token = strings.TrimPrefix(token, "Bearer ")
 
-	err := utils.VerifyToken(token)
+	userId, err := utils.VerifyToken(token)
 	if err != nil {
 		context.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 		return
@@ -59,8 +59,7 @@ func CreateEvent(context *gin.Context) {
 		return
 	}
 
-	event.ID = 1
-	event.UserID = 1
+	event.UserID = int(userId) 
 
 	event.Save()
 	context.JSON(http.StatusOK, gin.H{"message": "event saved"})
