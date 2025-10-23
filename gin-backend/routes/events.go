@@ -2,10 +2,8 @@ package routes
 
 import (
 	"go_backend/models"
-	"go_backend/utils"
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -36,29 +34,15 @@ func GetEvent(context *gin.Context) {
 }
 
 func CreateEvent(context *gin.Context) {
-	token := context.Request.Header.Get("Authorization")
-
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "not authorized1"})
-		return
-	}
-
-	token = strings.TrimPrefix(token, "Bearer ")
-
-	userId, err := utils.VerifyToken(token)
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
-		return
-	}
-
 	var event models.Event
-	err = context.ShouldBindJSON(&event)
+	err := context.ShouldBindJSON(&event)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error"} )
 		return
 	}
 
+	userId := context.GetInt64("userId")
 	event.UserID = int(userId) 
 
 	event.Save()
