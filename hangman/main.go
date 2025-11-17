@@ -30,6 +30,7 @@ func main() {
 
 func hangman() {
 
+	var endGame = false
 	var badAttempts = 0
 
 
@@ -42,11 +43,11 @@ func hangman() {
 	gameWord := buildhHiddenWord(word)
 	originalWord := word
 
-	for badAttempts <= 6 {
+	for badAttempts <= 6 || endGame {
 		fmt.Println("Enter the letter: ")
 		fmt.Scan(&letter)
 
-		result := compareLetter(letter, originalWord, gameWord, &badAttempts)
+		result := compareLetter(letter, originalWord, gameWord, &badAttempts, &endGame)
 
 		gameWord = result
 
@@ -64,11 +65,12 @@ func buildhHiddenWord(word string) []string {
 	return hidden
 }
 
-func compareLetter(letter string, originalWord string, gameWord []string, badAttempts *int) []string {
+func compareLetter(letter string, originalWord string, gameWord []string, badAttempts *int, endGame *bool) []string {
 	result := make([]string, len(gameWord))
 	copy(result, gameWord)
 
 	containsCorrectLetter := false
+	winGame := false
 
 	for i := range originalWord {
 		if letter == string(originalWord[i]) && result[i] == "_" {
@@ -79,6 +81,16 @@ func compareLetter(letter string, originalWord string, gameWord []string, badAtt
 
 	if !containsCorrectLetter {
 		*badAttempts++
+	}
+	
+	for i := range originalWord {
+		 if string(originalWord[i]) == result[i] {
+			winGame = true
+		} 	
+	}
+
+	if winGame {
+		*endGame = true
 	}
 
 	return result
