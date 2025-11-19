@@ -4,10 +4,8 @@ import (
 	"go_backend/models"
 	"net/http"
 	"strconv"
-
 	"github.com/gin-gonic/gin"
 )
-
 
 
 func registerForEvents(context *gin.Context) {
