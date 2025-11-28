@@ -1,0 +1,19 @@
+// Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+package main
+
+import "fmt"
+
+
+func main() {
+	
+	numbers := []int{3, 4, 5}
+	target := 9
+		
+
+	fmt.Println("Hello World")
+	fmt.Printf("Array list %d", numbers)
+
+	fmt.Println(target)
+
+
+}
